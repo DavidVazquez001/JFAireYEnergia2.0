@@ -9,32 +9,28 @@ import Product from '../../../../models/Product';
 // }
 
 export async function GET(req) {
-    // Verifica si estamos en el entorno de producción durante el build
-    if (process.env.NODE_ENV !== 'production') {
+    if (
+        process.env.NODE_ENV === 'production' &&
+        typeof window === 'undefined'
+    ) {
         return new Response(
-            JSON.stringify({ message: 'Data not available during build' }),
+            JSON.stringify({ message: 'API not available during build' }),
             { status: 200 },
         );
     }
+
     await dbConnect();
 
     try {
         const products = await Product.find({});
-
         const categorizedProducts = products.reduce((acc, product) => {
             const { category, subcategory } = product;
-
-            // Inicializa la categoría si no existe
             if (!acc[category]) {
                 acc[category] = {};
             }
-
-            // Inicializa la subcategoría dentro de la categoría si no existe
             if (!acc[category][subcategory]) {
                 acc[category][subcategory] = [];
             }
-
-            // Agrega el producto a la subcategoría correspondiente
             acc[category][subcategory].push(product);
             return acc;
         }, {});
