@@ -15,7 +15,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`bg-jf-strong-green text-jf-white fixed z-50 w-full ${
+            className={`fixed z-50 w-full bg-jf-strong-green text-jf-white ${
                 isOpen ? 'h-auto' : 'h-24'
             } transition-all duration-300`}
         >
@@ -27,10 +27,10 @@ const Navbar = () => {
                             <Image
                                 src={logo}
                                 alt="JF Aire y Energía"
-                                width={65} // Asegúrate de definir un valor correcto
+                                width={96} // Asegúrate de definir un valor correcto
                                 height={50} // Asegúrate de definir un valor correcto
                                 priority={true} // Usa true si es importante para el LCP
-                                className="h-auto w-auto" // Asegura que se mantenga el aspecto
+                                className="h-auto w-24" // Asegura que se mantenga el aspecto
                             />
                         </Link>
                         <Link href="/">
