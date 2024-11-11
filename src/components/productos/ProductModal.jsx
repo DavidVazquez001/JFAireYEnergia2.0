@@ -9,11 +9,11 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import Image from 'next/image';
 
 const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
+    const [mainImage, setMainImage] = useState(selectedProduct.images[0]);
+
     if (!selectedProduct || !selectedProduct.images) {
         return null;
     }
-
-    const [mainImage, setMainImage] = useState(selectedProduct.images[0]);
 
     return (
         // Apertura del modal
