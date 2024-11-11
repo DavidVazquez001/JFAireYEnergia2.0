@@ -1,20 +1,17 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import Image from 'next/image';
 
 const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
-    const [mainImage, setMainImage] = useState(selectedProduct?.images?.[0]);
+    // Estado inicial que apunta a la primera imagen del producto si está disponible
+    const [mainImage, setMainImage] = useState(
+        selectedProduct?.images?.[0] || null,
+    );
 
-    useEffect(() => {
-        if (selectedProduct?.images?.[0]) {
-            setMainImage(selectedProduct.images[0]);
-        }
-    }, [selectedProduct]);
-
-    if (!selectedProduct || !selectedProduct.images) {
+    if (!selectedProduct) {
         return <p>No product data available</p>;
     }
 
@@ -32,7 +29,35 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                     <h2 className="flex items-center justify-center rounded-r-lg rounded-t-lg bg-gray-200 p-2 text-xl font-bold text-jf-light-green">
                         {selectedProduct.name}
                     </h2>
-                    {/* Aquí puedes insertar los tabs */}
+                    <TabList className="flex space-x-4">
+                        <Tab
+                            className={({ selected }) =>
+                                selected
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
+                                    : 'text-lg text-gray-500'
+                            }
+                        >
+                            Imágenes
+                        </Tab>
+                        <Tab
+                            className={({ selected }) =>
+                                selected
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
+                                    : 'text-lg text-gray-500'
+                            }
+                        >
+                            Introduction
+                        </Tab>
+                        <Tab
+                            className={({ selected }) =>
+                                selected
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
+                                    : 'text-lg text-gray-500'
+                            }
+                        >
+                            Data Sheet
+                        </Tab>
+                    </TabList>
 
                     <TabPanels className="mt-2 flex h-full flex-grow flex-col">
                         <TabPanel className="flex h-full flex-grow flex-col">
@@ -54,8 +79,8 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                                     )}
                                 </div>
 
-                                {/* Miniaturas */}
-                                {selectedProduct.images.length > 0 && (
+                                {/* Contenedor de miniaturas */}
+                                {selectedProduct.images?.length > 0 && (
                                     <div className="w-full">
                                         <Swiper
                                             modules={[Pagination]}
@@ -94,7 +119,74 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                                 )}
                             </div>
                         </TabPanel>
-                        {/* Otros TabPanels */}
+
+                        <TabPanel className="p-4">
+                            <p className="mb-4 text-lg text-gray-700">
+                                {selectedProduct.introduction}
+                            </p>
+                            <h3 className="text-lg font-semibold text-jf-light-green md:text-xl">
+                                Product Features
+                            </h3>
+                            <ul className="list-inside list-disc space-y-2 text-gray-600">
+                                {selectedProduct.features?.map(
+                                    (feature, index) => (
+                                        <li
+                                            key={index}
+                                            className="text-base leading-relaxed"
+                                        >
+                                            {feature}
+                                        </li>
+                                    ),
+                                )}
+                            </ul>
+                            <h3 className="mt-4 text-lg font-semibold text-jf-light-green md:text-xl">
+                                Applications
+                            </h3>
+                            <ul className="list-inside list-disc space-y-2 text-gray-600">
+                                {selectedProduct.applications?.map(
+                                    (application, index) => (
+                                        <li
+                                            key={index}
+                                            className="text-base leading-relaxed"
+                                        >
+                                            {application}
+                                        </li>
+                                    ),
+                                )}
+                            </ul>
+                        </TabPanel>
+
+                        <TabPanel>
+                            <table className="w-full border-collapse border border-gray-300">
+                                <thead>
+                                    <tr>
+                                        <th className="border border-gray-300 px-4 py-2 text-left text-lg font-semibold text-jf-light-green md:text-xl">
+                                            Property
+                                        </th>
+                                        <th className="border border-gray-300 px-4 py-2 text-left text-lg font-semibold text-jf-light-green md:text-xl">
+                                            Value
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(
+                                        selectedProduct.dataSheet || {},
+                                    ).map(([key, value], index) => (
+                                        <tr
+                                            key={index}
+                                            className="odd:bg-gray-100"
+                                        >
+                                            <td className="border border-gray-300 px-4 py-2 capitalize">
+                                                {key.replace(/([A-Z])/g, ' $1')}
+                                            </td>
+                                            <td className="border border-gray-300 px-4 py-2">
+                                                {value || 'N/A'}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </TabPanel>
                     </TabPanels>
                 </TabGroup>
             </div>
