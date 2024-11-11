@@ -23,11 +23,12 @@ const Contact = () => {
 
         emailjs
             .send(
-                'service_6zn7e0b',
-                'template_nrjl1qs',
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
                 formData,
-                'pxoOTcL0KxPKEGurj',
+                process.env.NEXT_PUBLIC_EMAILJS_USER_ID,
             )
+
             .then(
                 (response) => {
                     setFormData({ from_name: '', from_email: '', message: '' });
