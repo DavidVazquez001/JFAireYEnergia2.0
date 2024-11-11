@@ -9,6 +9,13 @@ import Product from '../../../../models/Product';
 // }
 
 export async function GET(req) {
+    // Verifica si estamos en el entorno de producción durante el build
+    if (process.env.NODE_ENV !== 'production') {
+        return new Response(
+            JSON.stringify({ message: 'Data not available during build' }),
+            { status: 200 },
+        );
+    }
     await dbConnect();
 
     try {
