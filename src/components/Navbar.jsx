@@ -16,7 +16,7 @@ const Navbar = () => {
     return (
         <nav
             className={`fixed z-50 w-full bg-jf-strong-green text-jf-white ${
-                isOpen ? 'h-auto' : 'h-24'
+                isOpen ? 'h-auto' : 'h-20'
             } transition-all duration-300`}
         >
             <div className="px-4 sm:px-6 lg:px-8">
@@ -27,17 +27,17 @@ const Navbar = () => {
                             <Image
                                 src={logo}
                                 alt="JF Aire y Energía"
-                                width={96} // Asegúrate de definir un valor correcto
+                                width={72} // Asegúrate de definir un valor correcto
                                 height={50} // Asegúrate de definir un valor correcto
                                 priority={true} // Usa true si es importante para el LCP
-                                className="h-auto w-24" // Asegura que se mantenga el aspecto
+                                //className="h-auto w-auto" // Asegura que se mantenga el aspecto
                             />
                         </Link>
                         <Link href="/">
                             <Image
                                 src={logoName}
                                 alt="JF Aire y Energía"
-                                className="h-8 w-auto md:h-12" // Asegura que se mantenga el aspecto
+                                className="h-6 w-auto md:h-12" // Asegura que se mantenga el aspecto
                             />
                         </Link>
                     </div>

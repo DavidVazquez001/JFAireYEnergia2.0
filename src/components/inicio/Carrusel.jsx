@@ -47,11 +47,11 @@ const Carrusel = () => {
                             className="h-full w-full object-cover brightness-50"
                         />
 
-                        <div className="text-jf-white absolute inset-0 flex flex-col items-center justify-center space-y-6 px-12 text-center md:px-24">
-                            <h2 className="text-5xl font-semibold md:text-7xl">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center space-y-6 px-12 text-center text-jf-white md:px-24">
+                            <h2 className="text-4xl font-semibold md:text-6xl">
                                 {slide.title}
                             </h2>
-                            <p className="text-2xl md:text-4xl">{slide.text}</p>
+                            <p className="text-xl md:text-3xl">{slide.text}</p>
                         </div>
                     </div>
                 </SwiperSlide>
