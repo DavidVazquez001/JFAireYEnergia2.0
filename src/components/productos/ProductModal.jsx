@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
@@ -6,10 +6,19 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import Image from 'next/image';
 
 const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
-    // Estado inicial que apunta a la primera imagen del producto si está disponible
+    const defaultImage = '/default-image.jpg'; // Ruta a una imagen predeterminada
+
     const [mainImage, setMainImage] = useState(
-        selectedProduct?.images?.[0] || null,
+        selectedProduct?.images?.[0] || defaultImage,
     );
+
+    useEffect(() => {
+        if (selectedProduct && selectedProduct.images?.length > 0) {
+            setMainImage(selectedProduct.images[0]);
+        } else {
+            setMainImage(defaultImage);
+        }
+    }, [selectedProduct]);
 
     if (!selectedProduct) {
         return <p>No product data available</p>;
@@ -64,19 +73,16 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                             <div className="flex h-full flex-col gap-4 pb-2">
                                 {/* Imagen Principal */}
                                 <div className="relative h-full w-full flex-grow">
-                                    {mainImage ? (
-                                        <Image
-                                            src={mainImage}
-                                            alt={selectedProduct.name}
-                                            layout="fill"
-                                            objectFit="contain"
-                                            className="rounded-lg"
-                                        />
-                                    ) : (
-                                        <p className="text-center text-gray-500">
-                                            No image available
-                                        </p>
-                                    )}
+                                    <Image
+                                        src={mainImage}
+                                        alt={
+                                            selectedProduct.name ||
+                                            'Default Image'
+                                        }
+                                        layout="fill"
+                                        objectFit="contain"
+                                        className="rounded-lg"
+                                    />
                                 </div>
 
                                 {/* Contenedor de miniaturas */}
