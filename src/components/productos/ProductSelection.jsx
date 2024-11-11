@@ -12,10 +12,24 @@ const ProductSelection = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubcategory, setSelectedSubcategory] = useState(null);
 
+    // useEffect(() => {
+    //     fetch('/api/productos')
+    //         .then((response) => response.json())
+    //         .then((data) => setCategories(data))
+    //         .catch((error) => console.error('Error fetching products:', error));
+    // }, []);
+
     useEffect(() => {
         fetch('/api/productos')
             .then((response) => response.json())
-            .then((data) => setCategories(data))
+            .then((data) => {
+                if (data && typeof data === 'object') {
+                    setCategories(data);
+                } else {
+                    console.error('Datos de categoría inválidos:', data);
+                    setCategories({});
+                }
+            })
             .catch((error) => console.error('Error fetching products:', error));
     }, []);
 
