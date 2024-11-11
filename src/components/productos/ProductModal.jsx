@@ -9,10 +9,12 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import Image from 'next/image';
 
 const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
-    const [mainImage, setMainImage] = useState(selectedProduct.images[0]);
+    const [mainImage, setMainImage] = useState(
+        selectedProduct?.images?.[0] || 'default-image.jpg',
+    );
 
     if (!selectedProduct || !selectedProduct.images) {
-        return null;
+        return <p>No product data available</p>;
     }
 
     return (
