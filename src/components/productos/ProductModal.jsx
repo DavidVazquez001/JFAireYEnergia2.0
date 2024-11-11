@@ -1,24 +1,20 @@
 import { useState } from 'react';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
-
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-
 import Image from 'next/image';
 
 const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
     const [mainImage, setMainImage] = useState(
-        selectedProduct?.images?.[0] || 'default-image.jpg',
+        selectedProduct?.images?.[0] || '/path/to/default-image.jpg', // Ajuste de imagen predeterminada
     );
 
-    if (!selectedProduct || !selectedProduct.images) {
+    if (!selectedProduct) {
         return <p>No product data available</p>;
     }
 
     return (
-        // Apertura del modal
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-600 bg-opacity-80 p-8 md:p-12">
             <div className="relative h-full w-full overflow-auto rounded-lg bg-white shadow-lg">
                 <button
@@ -29,7 +25,6 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                 </button>
 
                 <TabGroup className="flex h-full flex-col p-4">
-                    {/* Producto */}
                     <h2 className="flex items-center justify-center rounded-r-lg rounded-t-lg bg-gray-200 p-2 text-xl font-bold text-jf-light-green">
                         {selectedProduct.name}
                     </h2>
@@ -68,70 +63,71 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                             <div className="flex h-full flex-col gap-4 pb-2">
                                 {/* Imagen Principal */}
                                 <div className="relative h-full w-full flex-grow">
-                                    <Image
-                                        src={mainImage}
-                                        alt={selectedProduct.name}
-                                        layout="fill"
-                                        objectFit="contain"
-                                        className="rounded-lg"
-                                    />
+                                    {mainImage ? (
+                                        <Image
+                                            src={mainImage}
+                                            alt={selectedProduct.name}
+                                            layout="fill"
+                                            objectFit="contain"
+                                            className="rounded-lg"
+                                        />
+                                    ) : (
+                                        <p className="text-center text-gray-500">
+                                            No image available
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Contenedor de miniaturas */}
-                                <div className="w-full">
-                                    <Swiper
-                                        modules={[Pagination]}
-                                        spaceBetween={5} // Espacio entre las miniaturas
-                                        slidesPerView={3}
-                                        pagination={{ clickable: true }}
-                                        breakpoints={{
-                                            640: {
-                                                slidesPerView: 4,
-                                            },
-                                            1024: {
-                                                slidesPerView: 6,
-                                            },
-                                        }}
-                                        className="h-[100px]"
-                                    >
-                                        {selectedProduct.images.map(
-                                            (image, index) => (
-                                                <SwiperSlide
-                                                    key={index}
-                                                    className="relative flex h-[100px] w-auto items-center justify-center"
-                                                >
-                                                    <Image
-                                                        src={image}
-                                                        alt={`Miniatura ${index}`}
-                                                        layout="fill" // Mantiene la proporción sin ocupar todo el contenedor
-                                                        //width={100} // Ajusta según el tamaño que deseas
-                                                        //height={100}
-                                                        objectFit="contain" // Ajusta la imagen para llenar el contenedor
-                                                        onClick={() =>
-                                                            setMainImage(image)
-                                                        }
-                                                        className="cursor-pointer rounded-md"
-                                                    />
-                                                </SwiperSlide>
-                                            ),
-                                        )}
-                                    </Swiper>
-                                </div>
+                                {selectedProduct.images?.length > 0 && (
+                                    <div className="w-full">
+                                        <Swiper
+                                            modules={[Pagination]}
+                                            spaceBetween={5}
+                                            slidesPerView={3}
+                                            pagination={{ clickable: true }}
+                                            breakpoints={{
+                                                640: { slidesPerView: 4 },
+                                                1024: { slidesPerView: 6 },
+                                            }}
+                                            className="h-[100px]"
+                                        >
+                                            {selectedProduct.images.map(
+                                                (image, index) => (
+                                                    <SwiperSlide
+                                                        key={index}
+                                                        className="relative flex h-[100px] w-auto items-center justify-center"
+                                                    >
+                                                        <Image
+                                                            src={image}
+                                                            alt={`Miniatura ${index}`}
+                                                            layout="fill"
+                                                            objectFit="contain"
+                                                            onClick={() =>
+                                                                setMainImage(
+                                                                    image,
+                                                                )
+                                                            }
+                                                            className="cursor-pointer rounded-md"
+                                                        />
+                                                    </SwiperSlide>
+                                                ),
+                                            )}
+                                        </Swiper>
+                                    </div>
+                                )}
                             </div>
                         </TabPanel>
 
                         <TabPanel className="p-4">
-                            {/* Introducción */}
                             <p className="mb-4 text-lg text-gray-700">
                                 {selectedProduct.introduction}
                             </p>
-
-                            {/* Características del Producto */}
                             <h3 className="text-lg font-semibold text-jf-light-green md:text-xl">
                                 Product Features
                             </h3>
                             <ul className="list-inside list-disc space-y-2 text-gray-600">
-                                {selectedProduct.features.map(
+                                {selectedProduct.features?.map(
                                     (feature, index) => (
                                         <li
                                             key={index}
@@ -142,16 +138,14 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                                     ),
                                 )}
                             </ul>
-
-                            {/* Aplicaciones */}
                             <h3 className="mt-4 text-lg font-semibold text-jf-light-green md:text-xl">
                                 Applications
                             </h3>
                             <ul className="list-inside list-disc space-y-2 text-gray-600">
-                                {selectedProduct.applications.map(
-                                    (application, indexApp) => (
+                                {selectedProduct.applications?.map(
+                                    (application, index) => (
                                         <li
-                                            key={indexApp}
+                                            key={index}
                                             className="text-base leading-relaxed"
                                         >
                                             {application}
@@ -175,7 +169,7 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                                 </thead>
                                 <tbody>
                                     {Object.entries(
-                                        selectedProduct.dataSheet,
+                                        selectedProduct.dataSheet || {},
                                     ).map(([key, value], index) => (
                                         <tr
                                             key={index}
