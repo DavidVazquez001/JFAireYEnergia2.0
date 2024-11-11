@@ -9,15 +9,15 @@ import Product from '../../../../models/Product';
 // }
 
 export async function GET(req) {
-    if (
-        process.env.NODE_ENV === 'production' &&
-        typeof window === 'undefined'
-    ) {
-        return new Response(
-            JSON.stringify({ message: 'API not available during build' }),
-            { status: 200 },
-        );
-    }
+    // if (
+    //     process.env.NODE_ENV === 'production' &&
+    //     typeof window === 'undefined'
+    // ) {
+    //     return new Response(
+    //         JSON.stringify({ message: 'API not available during build' }),
+    //         { status: 200 },
+    //     );
+    // }
 
     await dbConnect();
 
