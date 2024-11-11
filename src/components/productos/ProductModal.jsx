@@ -42,8 +42,8 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                         <Tab
                             className={({ selected }) =>
                                 selected
-                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
-                                    : 'text-lg text-gray-500'
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-lg font-semibold text-jf-light-green underline'
+                                    : 'text-base text-gray-500'
                             }
                         >
                             Imágenes
@@ -51,8 +51,8 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                         <Tab
                             className={({ selected }) =>
                                 selected
-                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
-                                    : 'text-lg text-gray-500'
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-lg font-semibold text-jf-light-green underline'
+                                    : 'text-base text-gray-500'
                             }
                         >
                             Introduction
@@ -60,8 +60,8 @@ const ProductModal = ({ selectedProduct, selectedId, handleClose }) => {
                         <Tab
                             className={({ selected }) =>
                                 selected
-                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-xl font-semibold text-jf-light-green underline'
-                                    : 'text-lg text-gray-500'
+                                    ? 'rounded-bl-lg rounded-br-lg border-b-2 bg-gray-200 px-2 py-1 text-lg font-semibold text-jf-light-green underline'
+                                    : 'text-base text-gray-500'
                             }
                         >
                             Data Sheet
