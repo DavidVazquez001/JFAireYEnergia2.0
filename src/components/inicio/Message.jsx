@@ -14,7 +14,7 @@ const Message = () => {
             }}
         >
             <h2 className="text-4xl font-light italic md:text-6xl">
-                La Calidad es Primero
+                La calidad es primero
             </h2>
 
             <p className="text-2xl md:text-3xl">
