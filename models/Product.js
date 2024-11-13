@@ -34,7 +34,7 @@ const productSchema = new mongoose.Schema(
         images: [String], // Array of URLs
     },
     {
-        collection: 'CabinetCooling',
+        collection: 'products',
     },
 );
 
