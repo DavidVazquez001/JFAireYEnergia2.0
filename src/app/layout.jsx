@@ -1,6 +1,7 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import NotFound from '@/components/NotFound';
 
 export const metadata = {
     title: 'JF Aire y Energía',
@@ -12,11 +13,12 @@ export default function RootLayout({ children }) {
     return (
         <html lang="es">
             <body>
-                <Navbar />
+                {/* <Navbar />
 
                 <div className="pt-20">{children}</div>
 
-                <Footer />
+                <Footer /> */}
+                <NotFound />
             </body>
         </html>
     );
